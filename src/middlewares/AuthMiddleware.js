@@ -2,17 +2,15 @@ const { verify } = require("jsonwebtoken");
 
 const validateToken = (req, res, next) => {
   const accessToken = req.header("accessToken");
-
-  if (!accessToken) return res.json({ error: "User not logged in!" });
-
   try {
+    if (!accessToken) return res.json({ error: "User not logged in!" });
     const validToken = verify(accessToken, "importantsecret");
-    req.user = validToken;
     if (validToken) {
+      req.user = validToken;
       return next();
-    }
+    }; 
   } catch (err) {
-    return res.json({ error: err });
+    return res.json({ message: 'Toket inválido', error: err });
   }
 };
 

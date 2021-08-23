@@ -2,14 +2,17 @@ const express = require("express");
 const http = require("http");
 const bobyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 //const path = require('path');
 const dotenv = require('dotenv'); 
 dotenv.config();
 const port = process.env.PORT || 4005;
 const app = express();
+
 app.use(cors());
 app.use(express.json())
 app.use(bobyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 //Routers
 const index = require("./routes/index");
 app.use(index);
